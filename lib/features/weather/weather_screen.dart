@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:open_weather_flutter_app/config/themes.dart';
+import 'package:open_weather_flutter_app/features/authentication/cubit/authentication_cubit.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_additional_forecast.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_hourly_forecast.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_icon.dart';
@@ -38,6 +40,17 @@ class WeatherScreen extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      GestureDetector(
+                        onTap: () => context.read<AuthenticationCubit>().signOut(),
+                        child: Text(
+                          'Выход',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                        ),
                       ),
                     ],
                   ),
@@ -135,10 +148,6 @@ class WeatherScreen extends StatelessWidget {
                     humidityDescription: 'Высокая влажность',
                   ),
                 ),
-                // ElevatedButton(
-                //   onPressed: () => context.read<AuthenticationCubit>().signOut(),
-                //   child: const Text('Sign Out'),
-                // )
               ],
             ),
           ),
