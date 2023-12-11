@@ -105,6 +105,7 @@ class WeatherScreen extends StatelessWidget {
                             constraints: const BoxConstraints(
                               minHeight: 230,
                               maxHeight: 230,
+                              maxWidth: 500,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
@@ -134,6 +135,7 @@ class WeatherScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         //TODO: добавь weather icon
                                         //TODO: добавь isCurrent
