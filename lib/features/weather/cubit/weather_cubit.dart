@@ -22,7 +22,10 @@ class WeatherCubit extends Cubit<WeatherState> {
           throw Exception('Необходимо включить сервис Геолокации в настройках.');
         }
 
-        final permission = await Geolocator.checkPermission();
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
         if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
           final position = await Geolocator.getCurrentPosition(
             forceAndroidLocationManager: true,

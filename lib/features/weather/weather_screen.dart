@@ -43,7 +43,7 @@ class WeatherScreen extends StatelessWidget {
                   case WeatherLoadingState():
                     return const Center(child: CircularProgressIndicator(color: Colors.white));
                   case WeatherLoadedState():
-                    return Column(
+                    return ListView(
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
