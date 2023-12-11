@@ -2,6 +2,9 @@
 
 A demo Flutter app that shows the current weather for the user’s location.
 
+![sign-in-screen.jpg](assets%2Fscreenshots%2Fsign-in-screen.jpg)
+![weather-screen.jpg](assets%2Fscreenshots%2Fweather-screen.jpg)
+
 ## Build
 
 1. Add Firebase configuration:
