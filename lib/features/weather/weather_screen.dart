@@ -8,7 +8,7 @@ import 'package:open_weather_flutter_app/features/weather/cubit/weather_cubit.da
 import 'package:open_weather_flutter_app/features/weather/utils.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_additional_forecast.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_hourly_forecast.dart';
-import 'package:open_weather_flutter_app/features/weather/widgets/weather_icon.dart';
+import 'package:open_weather_flutter_app/features/weather/widgets/weather_main_forecast.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
@@ -73,29 +73,12 @@ class WeatherScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 1),
-                        WeatherIcon(mainWeatherCondition: state.current.weatherMain ?? ''),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                state.current.temp != null
-                                    ? '${convertToCelsius(state.current.temp!).round()}º'
-                                    : 'Неизвестно',
-                                style: Theme.of(context).textTheme.displayLarge?.copyWith(color: Colors.white),
-                              ),
-                              Text(
-                                state.current.weatherDescription ?? '',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Макс.: 31º Мин: 25º',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                        WeatherMainForecast(
+                          weatherDescription: state.selectedForecast.weather.first.description,
+                          weatherCondition: state.selectedForecast.weather.first.main,
+                          temperature: state.selectedForecast.main.temp,
+                          maxTemperature: state.selectedForecast.main.tempMax,
+                          minTemperature: state.selectedForecast.main.tempMin,
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
@@ -138,11 +121,16 @@ class WeatherScreen extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        for (var i = 0; i < 4; i++)
-                                          WeatherHourlyForecast(
-                                            time: '14:00',
-                                            forecast: '28º',
-                                            isCurrent: i == 1,
+                                        for (var forecast in state.forecasts)
+                                          GestureDetector(
+                                            onTap: () => context.read<WeatherCubit>().selectForecast(
+                                                forecast, state.forecasts, state.city, state.timezoneOffset),
+                                            child: WeatherHourlyForecast(
+                                              time: DateFormat('HH:mm', 'ru').format(DateTime.parse(forecast.dt_txt)
+                                                  .add(Duration(seconds: state.timezoneOffset))),
+                                              forecast: convertToCelsius(forecast.main.temp).round().toString(),
+                                              isCurrent: forecast == state.selectedForecast,
+                                            ),
                                           ),
                                       ],
                                     ),
@@ -155,13 +143,10 @@ class WeatherScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                           child: WeatherAdditionalForecast(
-                            windSpeed: state.current.windSpeed,
-                            windDescription: state.current.windDegree != null
-                                ? 'Ветер ${getCardinalDirection(state.current.windDegree!)}'
-                                : '',
-                            humidity: state.current.humidity,
-                            humidityDescription:
-                                state.current.humidity != null ? getHumidityDescription(state.current.humidity!) : '',
+                            windSpeed: state.selectedForecast.wind.speed,
+                            windDescription: 'Ветер ${getCardinalDirection(state.selectedForecast.wind.degree)}',
+                            humidity: state.selectedForecast.main.humidity,
+                            humidityDescription: getHumidityDescription(state.selectedForecast.main.humidity),
                           ),
                         ),
                       ],

@@ -1,8 +1,5 @@
-import 'package:weather_pack/weather_pack.dart';
-
-double convertToCelsius(final temp) {
-  const Temp unitMeasure = Temp.celsius;
-  return unitMeasure.value(temp);
+double convertToCelsius(double temp) {
+  return (temp - 273.15).roundToDouble();
 }
 
 String getCardinalDirection(double angle) {

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:open_weather_flutter_app/features/weather/repositories/weather_repository.dart';
-import 'package:weather_pack/weather_pack.dart';
+import 'package:open_weather_flutter_app/features/weather/model/ow_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/repositories/open_weather_http_repository.dart';
 
 part 'weather_state.dart';
 
@@ -11,7 +11,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     getWeather();
   }
 
-  final WeatherRepository weatherRepository;
+  final OpenWeatherHttpRepository weatherRepository;
 
   void getWeather([double? latitude, double? longitude]) async {
     emit(WeatherLoadingState());
@@ -38,17 +38,15 @@ class WeatherCubit extends Cubit<WeatherState> {
         }
       }
 
-      final place = await weatherRepository.getPlace(latitude, longitude);
-      var cityName = place.name;
-      if (place.localNames != null) {
-        cityName = place.localNames![WeatherLanguage.russian];
+      final response = await weatherRepository.getHourlyForecastData(latitude, longitude);
+      if (response.cod == '200') {
+        emit(WeatherLoadedState(response.list, response.city.name, response.list.first, response.city.timezone));
       }
-      final weather = await weatherRepository.getWeather(latitude, longitude);
-
-      // convert to Celsius
-      emit(WeatherLoadedState(cityName ?? '', weather, []));
     } catch (e) {
       emit(WeatherRetrievalErrorState(e.toString()));
     }
   }
+
+  void selectForecast(OWForecast forecast, List<OWForecast> forecasts, String city, int timezoneOffset) =>
+      emit(WeatherLoadedState(forecasts, city, forecast, timezoneOffset));
 }

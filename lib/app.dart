@@ -7,10 +7,7 @@ import 'package:open_weather_flutter_app/features/authentication/cubit/authentic
 import 'package:open_weather_flutter_app/features/authentication/repositories/authentication_repository.dart';
 import 'package:open_weather_flutter_app/features/authentication/repositories/firebase_authentication_repository.dart';
 import 'package:open_weather_flutter_app/features/weather/cubit/weather_cubit.dart';
-import 'package:open_weather_flutter_app/features/weather/repositories/weather_repository.dart';
-import 'package:weather_pack/weather_pack.dart';
-
-import 'features/weather/repositories/open_weather_repository.dart';
+import 'package:open_weather_flutter_app/features/weather/repositories/open_weather_http_repository.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -21,15 +18,15 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   late final AuthenticationRepository authenticationRepository;
-  late final WeatherRepository weatherRepository;
+  late final OpenWeatherHttpRepository weatherRepository;
 
   @override
   void initState() {
     super.initState();
 
-    weatherRepository = OpenWeatherRepository(
-      openWeatherService: WeatherService(dotenv.env['API_KEY'] ?? '', language: WeatherLanguage.russian),
-      geocodingService: GeocodingService(dotenv.env['API_KEY'] ?? ''),
+    weatherRepository = OpenWeatherHttpRepository(
+      apiPath: dotenv.env['API_PATH'] ?? '',
+      apiKey: dotenv.env['API_KEY'] ?? '',
     );
     authenticationRepository = FirebaseAuthenticationRepository();
   }

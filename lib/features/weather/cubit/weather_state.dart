@@ -4,12 +4,13 @@ sealed class WeatherState {}
 
 final class WeatherLoadingState extends WeatherState {}
 
-final class WeatherLoadedState extends WeatherState {
-  WeatherLoadedState(this.city, this.current, this.forecast);
+class WeatherLoadedState extends WeatherState {
+  WeatherLoadedState(this.forecasts, this.city, this.selectedForecast, this.timezoneOffset);
 
   final String city;
-  final WeatherCurrent current;
-  final List<WeatherHourly> forecast;
+  final int timezoneOffset;
+  final OWForecast selectedForecast;
+  final List<OWForecast> forecasts;
 }
 
 final class WeatherRetrievalErrorState extends WeatherState with EquatableMixin {
