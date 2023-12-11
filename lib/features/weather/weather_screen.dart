@@ -118,10 +118,12 @@ class WeatherScreen extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // TODO: проверь text style
                                       Text(
                                         'Сегодня',
-                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800,
+                                            ),
                                       ),
                                       Text(
                                         DateFormat('d MMMM', 'ru').format(DateTime.now()),
