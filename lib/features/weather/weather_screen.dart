@@ -13,6 +13,7 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double topPadding = MediaQuery.of(context).padding.top > 24 ? 0 : 24 - MediaQuery.of(context).padding.top;
     return Scaffold(
       body: Stack(
         children: [
@@ -29,7 +30,7 @@ class WeatherScreen extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                  padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
                   child: Row(
                     children: [
                       SvgPicture.asset('assets/icons/pin.svg'),

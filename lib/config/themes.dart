@@ -10,7 +10,7 @@ Color red = const Color.fromRGBO(255, 88, 93, 1);
 
 TextTheme defaultTextTheme = TextTheme(
   displayLarge: GoogleFonts.ubuntu(fontSize: 64, height: 1.125, fontWeight: FontWeight.w500, color: Colors.white),
-  headlineLarge: GoogleFonts.ubuntu(fontSize: 32, height: 1.125, fontWeight: FontWeight.w500, color: black),
+  headlineLarge: GoogleFonts.ubuntu(fontSize: 28, height: 1.143, fontWeight: FontWeight.w500, color: black),
   // headlineMedium: TextStyle(),
   // headlineSmall: TextStyle(),
   bodyLarge: GoogleFonts.roboto(fontSize: 17, height: 1.42, fontWeight: FontWeight.w400, color: grey),

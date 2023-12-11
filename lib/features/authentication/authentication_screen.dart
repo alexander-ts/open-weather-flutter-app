@@ -20,13 +20,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final areaPadding = MediaQuery.of(context).padding.top > 20
+        ? MediaQuery.of(context).padding.top - 20
+        : MediaQuery.of(context).padding.top;
+    final double topPadding = areaPadding < 48 ? 48 - areaPadding : 0;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 48,
-            horizontal: 24,
-          ),
+          padding: EdgeInsets.fromLTRB(24, topPadding, 24, 48),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -40,7 +41,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 'Введите данные для входа',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 32),
               Form(
                 child: Column(
                   children: [
