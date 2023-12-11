@@ -9,10 +9,10 @@ class WeatherAdditionalForecast extends StatelessWidget {
       required this.humidity,
       required this.humidityDescription});
 
-  final int windSpeed;
-  final String windDescription;
-  final double humidity;
-  final String humidityDescription;
+  final double? windSpeed;
+  final String? windDescription;
+  final double? humidity;
+  final String? humidityDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -24,33 +24,37 @@ class WeatherAdditionalForecast extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(children: [
-            SvgPicture.asset('assets/icons/wind.svg'),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 56,
-              child: Text('$windSpeed м/с'),
-            ),
-            const SizedBox(width: 24),
-            Text(
-              windDescription,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
-            )
-          ]),
-          const SizedBox(height: 16),
-          Row(children: [
-            SvgPicture.asset('assets/icons/drop.svg'),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 56,
-              child: Text('$humidity%'),
-            ),
-            const SizedBox(width: 24),
-            Text(
-              humidityDescription,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
-          ]),
+          if (windSpeed != null && windDescription != null) ...[
+            Row(children: [
+              SvgPicture.asset('assets/icons/wind.svg'),
+              const SizedBox(width: 8),
+              SizedBox(
+                width: 56,
+                child: Text('$windSpeed м/с'),
+              ),
+              const SizedBox(width: 24),
+              Text(
+                windDescription!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+              )
+            ]),
+          ],
+          if (humidity != null && humidityDescription != null) ...[
+            const SizedBox(height: 16),
+            Row(children: [
+              SvgPicture.asset('assets/icons/drop.svg'),
+              const SizedBox(width: 8),
+              SizedBox(
+                width: 56,
+                child: Text('$humidity%'),
+              ),
+              const SizedBox(width: 24),
+              Text(
+                humidityDescription!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+              ),
+            ]),
+          ],
         ],
       ),
     );

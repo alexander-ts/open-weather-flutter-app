@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_weather_flutter_app/config/routes.dart';
 import 'package:open_weather_flutter_app/config/themes.dart';
 import 'package:open_weather_flutter_app/features/authentication/cubit/authentication_cubit.dart';
 import 'package:open_weather_flutter_app/features/authentication/repositories/authentication_repository.dart';
 import 'package:open_weather_flutter_app/features/authentication/repositories/firebase_authentication_repository.dart';
+import 'package:open_weather_flutter_app/features/weather/cubit/weather_cubit.dart';
+import 'package:open_weather_flutter_app/features/weather/repositories/weather_repository.dart';
+import 'package:weather_pack/weather_pack.dart';
+
+import 'features/weather/repositories/open_weather_repository.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -15,10 +21,16 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   late final AuthenticationRepository authenticationRepository;
+  late final WeatherRepository weatherRepository;
 
   @override
   void initState() {
     super.initState();
+
+    weatherRepository = OpenWeatherRepository(
+      openWeatherService: WeatherService(dotenv.env['API_KEY'] ?? '', language: WeatherLanguage.russian),
+      geocodingService: GeocodingService(dotenv.env['API_KEY'] ?? ''),
+    );
     authenticationRepository = FirebaseAuthenticationRepository();
   }
 
@@ -31,8 +43,11 @@ class _MainAppState extends State<MainApp> {
       navigatorKey: navigatorKey,
       routes: Routes.configureRoutes(),
       builder: (context, child) {
-        return BlocProvider(
-          create: (_) => AuthenticationCubit(authenticationRepository),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => AuthenticationCubit(authenticationRepository)),
+            BlocProvider(create: (_) => WeatherCubit(weatherRepository)),
+          ],
           child: BlocListener<AuthenticationCubit, AuthenticationState>(
             listener: (context, state) {
               switch (state) {
