@@ -130,6 +130,7 @@ class WeatherScreen extends StatelessWidget {
                                                   .add(Duration(seconds: state.timezoneOffset))),
                                               forecast: convertToCelsius(forecast.main.temp).round().toString(),
                                               isCurrent: forecast == state.selectedForecast,
+                                              weatherCondition: forecast.weather.first.main,
                                             ),
                                           ),
                                       ],

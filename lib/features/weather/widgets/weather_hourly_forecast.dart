@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
 
+Map<String, String> _mainWeatherHourlyIconMap = {
+  'Clouds': 'assets/images/CloudSnow.png',
+  'Clear': 'assets/images/Sun.png',
+  'Rain': 'assets/images/CloudRain.png',
+  'Snow': 'assets/images/CloudSnow.png',
+  'Thunderstorm': 'assets/images/CloudLightning.png',
+  'Drizzle': 'assets/images/CloudMoon.png',
+  'Other': 'assets/images/CloudLightning.png',
+};
+
 class WeatherHourlyForecast extends StatelessWidget {
-  const WeatherHourlyForecast({super.key, this.isCurrent = false, required this.time, required this.forecast});
+  const WeatherHourlyForecast(
+      {super.key, this.isCurrent = false, required this.time, required this.forecast, required this.weatherCondition});
 
   final bool isCurrent;
   final String time;
+  final String weatherCondition;
   final String forecast;
+
+  String getRelatedIconAsset() {
+    final keyExists = _mainWeatherHourlyIconMap.containsKey(weatherCondition);
+    if (keyExists) {
+      return _mainWeatherHourlyIconMap[weatherCondition]!;
+    } else {
+      return _mainWeatherHourlyIconMap['Other']!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +51,7 @@ class WeatherHourlyForecast extends StatelessWidget {
             time,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
           ),
-          Image.asset('assets/images/Sun.png'),
+          Image.asset(getRelatedIconAsset()),
           Text(
             forecast,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
