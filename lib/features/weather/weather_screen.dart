@@ -73,7 +73,7 @@ class WeatherScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 1),
-                        const WeatherIcon(),
+                        WeatherIcon(mainWeatherCondition: state.current.weatherMain ?? ''),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                           child: Column(

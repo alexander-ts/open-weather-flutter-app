@@ -1,7 +1,29 @@
 import 'package:flutter/cupertino.dart';
 
+Map<String, String> _mainWeatherIconMap = {
+  'Clouds': 'assets/images/variant4.png',
+  'Clear': 'assets/images/variant2.png',
+  'Rain': 'assets/images/variant3.png',
+  'Snow': 'assets/images/variant4.png',
+  'Thunderstorm': 'assets/images/variant5.png',
+  'Drizzle': 'assets/images/variant6.png',
+  'Other': 'assets/images/variant5.png',
+};
+
 class WeatherIcon extends StatelessWidget {
-  const WeatherIcon({super.key});
+  const WeatherIcon({super.key, required this.mainWeatherCondition});
+
+  final String mainWeatherCondition;
+
+  String getRelatedIconAsset() {
+    final keyExists = _mainWeatherIconMap.containsKey(mainWeatherCondition);
+
+    if (keyExists) {
+      return _mainWeatherIconMap[mainWeatherCondition]!;
+    } else {
+      return _mainWeatherIconMap['Other']!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +39,7 @@ class WeatherIcon extends StatelessWidget {
                 BoxShadow(
                   color: Color.fromRGBO(189, 135, 255, 1),
                   blurRadius: 80,
-                  blurStyle: BlurStyle.outer,
+                  blurStyle: BlurStyle.normal,
                 )
               ],
             ),
@@ -27,7 +49,7 @@ class WeatherIcon extends StatelessWidget {
           child: SizedBox(
             width: 180,
             height: 180,
-            child: Image.asset('assets/images/variant1.png'),
+            child: Image.asset(getRelatedIconAsset()),
           ),
         ),
       ],
