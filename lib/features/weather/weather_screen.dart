@@ -123,7 +123,7 @@ class WeatherScreen extends StatelessWidget {
                                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
                                       ),
                                       Text(
-                                        DateFormat('d MMMM').format(DateTime.now()),
+                                        DateFormat('d MMMM', 'ru').format(DateTime.now()),
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
                                       ),
                                     ],
