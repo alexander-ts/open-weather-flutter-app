@@ -30,9 +30,7 @@ class WeatherHourlyForecast extends StatelessWidget {
             time,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
           ),
-          // const SizedBox(height: 16),
           Image.asset('assets/images/Sun.png'),
-          // const SizedBox(height: 16),
           Text(
             forecast,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),

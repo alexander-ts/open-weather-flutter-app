@@ -13,3 +13,15 @@ flutterfire configure
 ```text
 API_KEY=your_open_weather_api_key
 ```
+
+## TODOs
+
+### Authentication
+- validate email address
+- ui divider border radius
+
+### Weather
+- implement http repository, current package does not cover all cases needed
+   - ui: max/min weather temperature
+   - weather hourly with icon 
+- move location logic outside a cubit

@@ -90,7 +90,6 @@ class WeatherScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
                               ),
                               const SizedBox(height: 8),
-                              //TODO: найди max и min
                               Text(
                                 'Макс.: 31º Мин: 25º',
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
@@ -139,8 +138,6 @@ class WeatherScreen extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        //TODO: добавь weather icon
-                                        //TODO: добавь isCurrent
                                         for (var i = 0; i < 4; i++)
                                           WeatherHourlyForecast(
                                             time: '14:00',

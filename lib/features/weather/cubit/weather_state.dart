@@ -4,16 +4,12 @@ sealed class WeatherState {}
 
 final class WeatherLoadingState extends WeatherState {}
 
-final class WeatherLoadedState extends WeatherState //with EquatableMixin
-{
+final class WeatherLoadedState extends WeatherState {
   WeatherLoadedState(this.city, this.current, this.forecast);
 
   final String city;
   final WeatherCurrent current;
   final List<WeatherHourly> forecast;
-
-  //@override
-  // List<Object?> get props => [];
 }
 
 final class WeatherRetrievalErrorState extends WeatherState with EquatableMixin {
