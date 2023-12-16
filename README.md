@@ -15,6 +15,7 @@ flutterfire configure
 
 ```text
 API_KEY=your_open_weather_api_key
+API_PATH=https://api.openweathermap.org/data/2.5
 ```
 
 ## TODOs

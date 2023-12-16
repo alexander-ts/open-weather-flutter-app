@@ -13,11 +13,18 @@ class WeatherLoadedState extends WeatherState {
   final List<OWForecast> forecasts;
 }
 
-final class WeatherRetrievalErrorState extends WeatherState with EquatableMixin {
-  WeatherRetrievalErrorState(this.message);
+enum WeatherErrorType {
+  locationServiceDisabled,
+  locationPermissionDenied,
+  retrievalError,
+  other,
+}
 
-  final String message;
+final class WeatherErrorState extends WeatherState with EquatableMixin {
+  WeatherErrorState(this.type);
+
+  final WeatherErrorType type;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [type];
 }

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_response.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_response.dart';
 
 class OpenWeatherHttpRepository {
   OpenWeatherHttpRepository({required this.apiPath, required this.apiKey}) {

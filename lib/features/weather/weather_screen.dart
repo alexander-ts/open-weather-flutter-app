@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:open_weather_flutter_app/config/themes.dart';
 import 'package:open_weather_flutter_app/features/authentication/cubit/authentication_cubit.dart';
-import 'package:open_weather_flutter_app/features/weather/cubit/weather_cubit.dart';
 import 'package:open_weather_flutter_app/features/weather/utils.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_additional_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/widgets/weather_error.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_hourly_forecast.dart';
 import 'package:open_weather_flutter_app/features/weather/widgets/weather_main_forecast.dart';
+
+import 'cubit/weather/weather_cubit.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
@@ -32,16 +34,34 @@ class WeatherScreen extends StatelessWidget {
             child: BlocBuilder<WeatherCubit, WeatherState>(
               builder: (context, state) {
                 switch (state) {
-                  case WeatherRetrievalErrorState():
-                    return Center(
-                      child: Text(
-                        'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                      ),
-                    );
                   case WeatherLoadingState():
                     return const Center(child: CircularProgressIndicator(color: Colors.white));
+                  case WeatherErrorState():
+                    {
+                      switch ((state).type) {
+                        case WeatherErrorType.locationServiceDisabled:
+                          return WeatherError(
+                            message: 'Сервис геолокации выключен.',
+                            buttonTitle: 'Открыть настройки',
+                            onButtonTap: () => context.read<WeatherCubit>().locationRepository.openLocationSettings(),
+                          );
+                        case WeatherErrorType.locationPermissionDenied:
+                          return WeatherError(
+                              message: 'Приложению необходимо разрешение на доступ к локации. ',
+                              buttonTitle: 'Дать доступ',
+                              onButtonTap: () {
+                                context.read<WeatherCubit>().locationRepository.requestPermissions();
+                                context.read<WeatherCubit>().locationRepository.openAppSettings();
+                                context.read<WeatherCubit>().getWeather();
+                              });
+                        case WeatherErrorType.retrievalError:
+                        case WeatherErrorType.other:
+                          return WeatherError(
+                              message: 'Произошла неизвестная ошибка. Попробуйте еще раз.',
+                              buttonTitle: 'Обновить',
+                              onButtonTap: () => context.read<WeatherCubit>().getWeather());
+                      }
+                    }
                   case WeatherLoadedState():
                     return ListView(
                       children: [

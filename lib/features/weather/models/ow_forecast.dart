@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_main_forecast.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_weather_forecast.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_wind_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_main_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_weather_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_wind_forecast.dart';
 
 part 'ow_forecast.g.dart';
 

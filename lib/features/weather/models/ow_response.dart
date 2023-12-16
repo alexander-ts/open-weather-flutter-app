@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_city.dart';
-import 'package:open_weather_flutter_app/features/weather/model/ow_forecast.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_city.dart';
+import 'package:open_weather_flutter_app/features/weather/models/ow_forecast.dart';
 
 part 'ow_response.g.dart';
 

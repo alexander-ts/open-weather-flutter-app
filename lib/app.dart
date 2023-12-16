@@ -6,7 +6,8 @@ import 'package:open_weather_flutter_app/config/themes.dart';
 import 'package:open_weather_flutter_app/features/authentication/cubit/authentication_cubit.dart';
 import 'package:open_weather_flutter_app/features/authentication/repositories/authentication_repository.dart';
 import 'package:open_weather_flutter_app/features/authentication/repositories/firebase_authentication_repository.dart';
-import 'package:open_weather_flutter_app/features/weather/cubit/weather_cubit.dart';
+import 'package:open_weather_flutter_app/features/weather/cubit/weather/weather_cubit.dart';
+import 'package:open_weather_flutter_app/features/weather/repositories/location_repository.dart';
 import 'package:open_weather_flutter_app/features/weather/repositories/open_weather_http_repository.dart';
 
 class MainApp extends StatefulWidget {
@@ -19,6 +20,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   late final AuthenticationRepository authenticationRepository;
   late final OpenWeatherHttpRepository weatherRepository;
+  late final LocationRepository locationRepository;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _MainAppState extends State<MainApp> {
       apiKey: dotenv.env['API_KEY'] ?? '',
     );
     authenticationRepository = FirebaseAuthenticationRepository();
+    locationRepository = LocationRepository();
   }
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -43,7 +46,7 @@ class _MainAppState extends State<MainApp> {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => AuthenticationCubit(authenticationRepository)),
-            BlocProvider(create: (_) => WeatherCubit(weatherRepository)),
+            BlocProvider(create: (_) => WeatherCubit(weatherRepository, locationRepository)),
           ],
           child: BlocListener<AuthenticationCubit, AuthenticationState>(
             listener: (context, state) {
